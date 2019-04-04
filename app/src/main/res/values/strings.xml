@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Meus Alunos</string>
+    <string name="remove_student_menu">Remover</string>
+    <string name="activity_form_menu_salvar">Salvar</string>
+    <string name="nome">Nome</string>
+    <string name="telefone">Telefone</string>
+    <string name="email">E-mail</string>
+    <string name="last_name">Last Name</string>
+    <string name="telefone_fixo">Telefone fixo</string>
+    <string name="telefone_celular">Telefone celular</string>
+</resources>
