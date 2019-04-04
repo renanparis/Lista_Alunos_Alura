@@ -30,15 +30,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
      private static final Migration MIGRATION_4_5 = new Migration(4, 5) {
          @Override
          public void migrate(@NonNull SupportSQLiteDatabase database) {
-             database.execSQL("CREATE TABLE IF NOT EXISTS `Student_new` (`" +
-                     "id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                     "`name` TEXT, " +
-                     "`telephone` TEXT, " +
-                     "`email` TEXT, " +
-                     "`registrationData` INTEGER, " +
-                     "`cellphone` TEXT)");
+             database.execSQL("CREATE TABLE IF NOT EXISTS `Student_new` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `telephone` TEXT, `cellPhone` TEXT, `email` TEXT, `registrationDate` INTEGER)");
 
-             database.execSQL("INSERT INTO Student_new (id, name, telephone, email, registrationData) SELECT id, name, phone, email, registrationDate FROM Student");
+
+             database.execSQL("INSERT INTO Student_new (id, name, telephone, email, registrationDate) SELECT id, name, phone, email, registrationDate FROM Student");
              database.execSQL("DROP TABLE Student");
              database.execSQL("ALTER TABLE Student_new RENAME TO Student");
          }

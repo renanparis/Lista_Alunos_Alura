@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconXmlAndPng">
+        <ignore path="src/main/res/drawable-hdpi/ic_action_add_student.png" />
+        <ignore path="src/main/res/drawable-hdpi/ic_action_add_student.png" />
+        <ignore path="src/main/res/drawable-hdpi/ic_action_add_student_form.png" />
+        <ignore path="src/main/res/drawable-mdpi/ic_action_add_student.png" />
+        <ignore path="src/main/res/drawable-mdpi/ic_action_add_student.png" />
+        <ignore path="src/main/res/drawable-mdpi/ic_action_add_student_form.png" />
+        <ignore path="src/main/res/drawable-xhdpi/ic_action_add_student.png" />
+        <ignore path="src/main/res/drawable-xhdpi/ic_action_add_student.png" />
+        <ignore path="src/main/res/drawable-xhdpi/ic_action_add_student_form.png" />
+        <ignore path="src/main/res/drawable-xxhdpi/ic_action_add_student.png" />
+        <ignore path="src/main/res/drawable-xxhdpi/ic_action_add_student_form.png" />
+    </issue>
+</lint>
