@@ -71,8 +71,8 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
 
     private void fillField() {
         fieldName.setText(student.getName());
-        fieldTelephone.setText(student.getTelephone());
-        fieldCellPhone.setText(student.getCellPhone());
+//        fieldTelephone.setText(student.getTelephone());
+//        fieldCellPhone.setText(student.getCellPhone());
         fieldEmail.setText(student.getEmail());
     }
 
@@ -84,8 +84,8 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
         String email = fieldEmail.getText().toString();
 
         student.setName(name);
-        student.setTelephone(telephone);
-        student.setCellPhone(cellPhone);
+//        student.setTelephone(telephone);
+//        student.setCellPhone(cellPhone);
         student.setEmail(email);
 
     }

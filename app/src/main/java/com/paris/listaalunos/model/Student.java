@@ -2,6 +2,7 @@ package com.paris.listaalunos.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -13,19 +14,17 @@ public class Student implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
     private String name;
-    private String telephone;
-    private String cellPhone;
-
-    public String getCellPhone() {
-        return cellPhone;
-    }
-
-    public void setCellPhone(String cellPhone) {
-        this.cellPhone = cellPhone;
-    }
-
     private String email;
     private Calendar registrationDate = Calendar.getInstance();
+    private List<Telephone> telephones;
+
+    public List<Telephone> getTelephones() {
+        return telephones;
+    }
+
+    public void setTelephones(List<Telephone> telephones) {
+        this.telephones = telephones;
+    }
 
     public Calendar getRegistrationDate() {
         return registrationDate;
@@ -47,9 +46,6 @@ public class Student implements Serializable {
         return name;
     }
 
-    public String getTelephone() {
-        return telephone;
-    }
 
     public String getEmail() {
         return email;
@@ -65,9 +61,6 @@ public class Student implements Serializable {
         this.name = name;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
 
     public void setEmail(String email) {
         this.email = email;
