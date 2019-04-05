@@ -1,6 +1,7 @@
 package com.paris.listaalunos.model;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -11,6 +12,13 @@ public class Telephone {
     private int id;
     private String number;
     private TelephoneType type;
+
+    @ForeignKey(entity = Student.class,
+    parentColumns = "id",
+    childColumns = "studentId",
+    onUpdate = ForeignKey.CASCADE,
+    onDelete = ForeignKey.CASCADE)
+    int studentId;
 
     public int getId() {
         return id;

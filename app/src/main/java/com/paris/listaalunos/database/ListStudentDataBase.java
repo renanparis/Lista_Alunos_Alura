@@ -6,6 +6,7 @@ import android.content.Context;
 import com.paris.listaalunos.database.converter.ConverterCalendar;
 import com.paris.listaalunos.database.converter.CoverterTelephoneType;
 import com.paris.listaalunos.database.dao.StudentDao;
+import com.paris.listaalunos.database.dao.TelephoneDAO;
 import com.paris.listaalunos.model.Student;
 import com.paris.listaalunos.model.Telephone;
 
@@ -37,5 +38,7 @@ public abstract class ListStudentDataBase extends RoomDatabase {
         return instance;
     }
 
+
+    public abstract TelephoneDAO getTelephoneDAO();
 
 }

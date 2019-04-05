@@ -16,15 +16,6 @@ public class Student implements Serializable {
     private String name;
     private String email;
     private Calendar registrationDate = Calendar.getInstance();
-    private List<Telephone> telephones;
-
-    public List<Telephone> getTelephones() {
-        return telephones;
-    }
-
-    public void setTelephones(List<Telephone> telephones) {
-        this.telephones = telephones;
-    }
 
     public Calendar getRegistrationDate() {
         return registrationDate;
