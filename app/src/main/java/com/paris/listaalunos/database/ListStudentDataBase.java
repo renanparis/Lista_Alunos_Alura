@@ -27,6 +27,7 @@ public abstract class ListStudentDataBase extends RoomDatabase {
     private static ListStudentDataBase instance;
 
     public abstract StudentDao getRoomStudentDao();
+    public abstract TelephoneDAO getTelephoneDAO();
 
     public static ListStudentDataBase getInstance(Context context) {
 
@@ -37,8 +38,5 @@ public abstract class ListStudentDataBase extends RoomDatabase {
         }
         return instance;
     }
-
-
-    public abstract TelephoneDAO getTelephoneDAO();
 
 }

@@ -21,9 +21,12 @@ public class ListStudentAdapter extends BaseAdapter {
 
     private final List<Student> students = new ArrayList<>();
     private final Context context;
+    private final TelephoneDAO dao;
 
     public ListStudentAdapter(Context context) {
         this.context = context;
+        dao =  ListStudentDataBase.getInstance(context).getTelephoneDAO();
+
     }
 
     @Override
@@ -54,8 +57,7 @@ public class ListStudentAdapter extends BaseAdapter {
         TextView name = inflate.findViewById(R.id.item_student_name);
         name.setText(student.getName());
         TextView phone = inflate.findViewById(R.id.item_student_phone);
-        TelephoneDAO dao =  ListStudentDataBase.getInstance(context).getTelephoneDAO();
-        Telephone firstTelephone = dao.searchFirstTelephone();
+        Telephone firstTelephone = dao.searchFirstTelephone(student.getId());
         phone.setText(firstTelephone.getNumber());
     }
 

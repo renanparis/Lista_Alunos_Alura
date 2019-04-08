@@ -18,7 +18,7 @@ public class Telephone {
     childColumns = "studentId",
     onUpdate = ForeignKey.CASCADE,
     onDelete = ForeignKey.CASCADE)
-    int studentId;
+    public int studentId;
 
     public int getId() {
         return id;
@@ -39,6 +39,20 @@ public class Telephone {
     public TelephoneType getType() {
         return type;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void setType(TelephoneType type) {
         this.type = type;
