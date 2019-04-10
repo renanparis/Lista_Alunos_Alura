@@ -132,6 +132,7 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
             Telephone telephoneFixed = new Telephone(numberFixed, TelephoneType.TELEPHONE, studentId);
             String numberCellphone = fieldCellPhone.getText().toString();
             Telephone cellphone = new Telephone(numberCellphone, TelephoneType.CELLPHONE, studentId);
+
             telephoneDAO.saveTelephone(telephoneFixed, cellphone);
 
 
