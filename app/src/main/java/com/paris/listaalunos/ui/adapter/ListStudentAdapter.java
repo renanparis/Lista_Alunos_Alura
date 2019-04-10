@@ -58,7 +58,10 @@ public class ListStudentAdapter extends BaseAdapter {
         name.setText(student.getName());
         TextView phone = inflate.findViewById(R.id.item_student_phone);
         Telephone firstTelephone = dao.searchFirstTelephone(student.getId());
-        phone.setText(firstTelephone.getNumber());
+        if (firstTelephone != null){
+            phone.setText(firstTelephone.getNumber());
+
+        }
     }
 
     private View createView(ViewGroup viewGroup) {

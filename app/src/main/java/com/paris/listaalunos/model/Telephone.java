@@ -14,11 +14,17 @@ public class Telephone {
     private TelephoneType type;
 
     @ForeignKey(entity = Student.class,
-    parentColumns = "id",
-    childColumns = "studentId",
-    onUpdate = ForeignKey.CASCADE,
-    onDelete = ForeignKey.CASCADE)
+            parentColumns = "id",
+            childColumns = "studentId",
+            onUpdate = ForeignKey.CASCADE,
+            onDelete = ForeignKey.CASCADE)
     public int studentId;
+
+    public Telephone(String number, TelephoneType type, int studentId) {
+        this.number = number;
+        this.type = type;
+        this.studentId = studentId;
+    }
 
     public int getId() {
         return id;
@@ -40,18 +46,9 @@ public class Telephone {
         return type;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    public int getStudentId() {
+        return studentId;
+    }
 
 
     public void setType(TelephoneType type) {

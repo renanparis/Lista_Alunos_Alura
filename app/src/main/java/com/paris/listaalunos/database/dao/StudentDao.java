@@ -15,7 +15,7 @@ import androidx.room.Update;
 public interface StudentDao {
 
     @Insert
-    void saveStudent(Student student);
+    Long saveStudent(Student student);
 
     @Query("SELECT * FROM student")
     List<Student> allStudents();

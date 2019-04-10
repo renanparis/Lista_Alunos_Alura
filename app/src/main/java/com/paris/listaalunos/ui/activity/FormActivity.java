@@ -10,7 +10,12 @@ import android.widget.Toast;
 import com.paris.listaalunos.R;
 import com.paris.listaalunos.database.ListStudentDataBase;
 import com.paris.listaalunos.database.dao.StudentDao;
+import com.paris.listaalunos.database.dao.TelephoneDAO;
 import com.paris.listaalunos.model.Student;
+import com.paris.listaalunos.model.Telephone;
+import com.paris.listaalunos.model.TelephoneType;
+
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,8 +28,10 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
     private EditText fieldTelephone;
     private EditText fieldCellPhone;
     private EditText fieldEmail;
-    private StudentDao dao;
+    private StudentDao studentDao;
     private Student student;
+    private TelephoneDAO telephoneDAO;
+    private List<Telephone> studentPhones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +40,8 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
         startField();
         loadStudent();
         ListStudentDataBase db = ListStudentDataBase.getInstance(this);
-        dao = db.getRoomStudentDao();
+        studentDao = db.getRoomStudentDao();
+        telephoneDAO = db.getTelephoneDAO();
 
 
     }
@@ -71,9 +79,17 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
 
     private void fillField() {
         fieldName.setText(student.getName());
-//        fieldTelephone.setText(student.getTelephone());
-//        fieldCellPhone.setText(student.getCellPhone());
         fieldEmail.setText(student.getEmail());
+        studentPhones = telephoneDAO.searchAllPhones(student.getId());
+        for (Telephone telephone:
+                studentPhones) {
+            if (telephone.getType() == TelephoneType.TELEPHONE){
+                fieldTelephone.setText(telephone.getNumber());
+            }else {
+                fieldCellPhone.setText(telephone.getNumber());
+            }
+            
+        }
     }
 
     private void fillForm() {
@@ -93,11 +109,31 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
     private void endForm() {
         fillForm();
         if (student.validId()) {
-            dao.editStudent(student);
+            studentDao.editStudent(student);
+            for (Telephone telephone:
+                 studentPhones) {
+                if (telephone.getType() == TelephoneType.TELEPHONE){
+                    String numberFixed = fieldTelephone.getText().toString();
+                    telephone.setNumber(numberFixed);
+                }else {
+                    String numberCellphone = fieldCellPhone.getText().toString();
+                    telephone.setNumber(numberCellphone);
+                }
+                telephoneDAO.update(studentPhones);
+
+            }
             Toast.makeText(this, "Aluno Alterado com sucesso!", Toast.LENGTH_SHORT).show();
 
         } else {
-            dao.saveStudent(student);
+            int studentId = studentDao.saveStudent(student).intValue();
+            String numberFixed = fieldTelephone.getText().toString();
+            Telephone telephoneFixed = new Telephone(numberFixed, TelephoneType.TELEPHONE, studentId);
+            String numberCellphone = fieldCellPhone.getText().toString();
+            Telephone cellphone = new Telephone(numberCellphone, TelephoneType.CELLPHONE, studentId);
+            telephoneDAO.saveTelephone(telephoneFixed, cellphone);
+
+
+
             Toast.makeText(this, "Aluno salvo com sucesso", Toast.LENGTH_SHORT).show();
         }
         finish();

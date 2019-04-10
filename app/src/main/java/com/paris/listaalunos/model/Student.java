@@ -2,7 +2,6 @@ package com.paris.listaalunos.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
