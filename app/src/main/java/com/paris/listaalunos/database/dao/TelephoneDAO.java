@@ -12,8 +12,7 @@ import androidx.room.Query;
 @Dao
 public interface TelephoneDAO {
 
-    @Query("SELECT t.* FROM  Telephone t " +
-            "WHERE t.studentId = :studentId LIMIT 1")
+    @Query("SELECT  t.* FROM  Telephone t WHERE t.studentId = :studentId  AND t.number IS NOT '' LIMIT 1")
     Telephone searchFirstTelephone(int studentId);
 
     @Insert
