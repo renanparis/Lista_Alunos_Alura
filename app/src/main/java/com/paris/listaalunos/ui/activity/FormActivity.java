@@ -37,12 +37,11 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
-        startField();
-        loadStudent();
         ListStudentDataBase db = ListStudentDataBase.getInstance(this);
         studentDao = db.getRoomStudentDao();
         telephoneDAO = db.getTelephoneDAO();
-
+        startField();
+        loadStudent();
 
     }
 
