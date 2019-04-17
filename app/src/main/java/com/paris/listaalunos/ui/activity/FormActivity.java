@@ -43,6 +43,7 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
         startField();
         loadStudent();
 
+
     }
 
     @Override
@@ -79,6 +80,10 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
     private void fillField() {
         fieldName.setText(student.getName());
         fieldEmail.setText(student.getEmail());
+        fillFieldStudent();
+    }
+
+    private void fillFieldStudent() {
         studentPhones = telephoneDAO.searchAllPhones(student.getId());
         for (Telephone telephone :
                 studentPhones) {
@@ -99,45 +104,63 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
         String email = fieldEmail.getText().toString();
 
         student.setName(name);
-//        student.setTelephone(telephone);
-//        student.setCellPhone(cellPhone);
         student.setEmail(email);
 
     }
 
     private void endForm() {
         fillForm();
+        Telephone telephoneFixed = createTelephone(fieldTelephone, TelephoneType.TELEPHONE);
+        Telephone cellphone = createTelephone(fieldCellPhone, TelephoneType.CELLPHONE);
+
         if (student.validId()) {
-            studentDao.editStudent(student);
-            String numberFixed = fieldTelephone.getText().toString();
-            Telephone telephoneFixed = new Telephone(numberFixed, TelephoneType.TELEPHONE, student.getId());
-            String numberCellphone = fieldCellPhone.getText().toString();
-            Telephone cellphone = new Telephone(numberCellphone, TelephoneType.CELLPHONE, student.getId());
-            for (Telephone telephone :
-                    studentPhones) {
-                if (telephone.getType() == TelephoneType.TELEPHONE) {
-                    telephoneFixed.setId(telephone.getId());
-                } else {
-                    cellphone.setId(telephone.getId());
-                }
-
-            }
-            telephoneDAO.update(telephoneFixed, cellphone);
-            Toast.makeText(this, "Aluno Alterado com sucesso!", Toast.LENGTH_SHORT).show();
-
+            updateStudent(telephoneFixed, cellphone);
         } else {
-            int studentId = studentDao.saveStudent(student).intValue();
-            String numberFixed = fieldTelephone.getText().toString();
-            Telephone telephoneFixed = new Telephone(numberFixed, TelephoneType.TELEPHONE, studentId);
-            String numberCellphone = fieldCellPhone.getText().toString();
-            Telephone cellphone = new Telephone(numberCellphone, TelephoneType.CELLPHONE, studentId);
-
-            telephoneDAO.saveTelephone(telephoneFixed, cellphone);
-
-
+            saveStudent(telephoneFixed, cellphone);
             Toast.makeText(this, "Aluno salvo com sucesso", Toast.LENGTH_SHORT).show();
         }
         finish();
+    }
+
+    private Telephone createTelephone(EditText fieldTelephone, TelephoneType telephone) {
+        String numberFixed = fieldTelephone.getText().toString();
+        return new Telephone(numberFixed, telephone);
+    }
+
+    private void saveStudent(Telephone telephoneFixed, Telephone cellphone) {
+        int studentId = studentDao.saveStudent(student).intValue();
+        connectsTelephoneStudent(studentId, telephoneFixed, cellphone);
+        telephoneDAO.saveTelephone(telephoneFixed, cellphone);
+    }
+
+    private void updateStudent(Telephone telephoneFixed, Telephone cellphone) {
+        studentDao.editStudent(student);
+        connectsTelephoneStudent(student.getId(), telephoneFixed, cellphone);
+
+        updatesIdStudent(telephoneFixed, cellphone);
+        telephoneDAO.update(telephoneFixed, cellphone);
+        Toast.makeText(this, "Aluno Alterado com sucesso!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updatesIdStudent(Telephone telephoneFixed, Telephone cellphone) {
+        for (Telephone telephone :
+                studentPhones) {
+            if (telephone.getType() == TelephoneType.TELEPHONE) {
+                telephoneFixed.setId(telephone.getId());
+            } else {
+                cellphone.setId(telephone.getId());
+            }
+
+        }
+    }
+
+    private void connectsTelephoneStudent(int studentId, Telephone... telephones) {
+        for (Telephone telephone :
+                telephones) {
+            telephone.setStudentId(studentId);
+
+        }
+
     }
 
 

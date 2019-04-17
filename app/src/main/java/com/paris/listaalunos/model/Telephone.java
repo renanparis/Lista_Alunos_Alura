@@ -20,10 +20,9 @@ public class Telephone {
             onDelete = ForeignKey.CASCADE)
     public int studentId;
 
-    public Telephone(String number, TelephoneType type, int studentId) {
+    public Telephone(String number, TelephoneType type) {
         this.number = number;
         this.type = type;
-        this.studentId = studentId;
     }
 
     public int getId() {
@@ -50,6 +49,9 @@ public class Telephone {
         return studentId;
     }
 
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
 
     public void setType(TelephoneType type) {
         this.type = type;
