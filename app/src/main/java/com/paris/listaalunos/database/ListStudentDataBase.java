@@ -33,7 +33,7 @@ public abstract class ListStudentDataBase extends RoomDatabase {
 
         if (instance == null) {
             instance = Room.databaseBuilder(context, ListStudentDataBase.class, AGENDA_DB)
-                    .allowMainThreadQueries().addMigrations(ALL_MIGRATIONS)
+                    .addMigrations(ALL_MIGRATIONS)
                     .build();
         }
         return instance;
