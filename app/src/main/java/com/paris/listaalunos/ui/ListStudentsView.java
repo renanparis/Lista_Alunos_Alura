@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.paris.listaalunos.asynctask.removeStudentTask;
 import com.paris.listaalunos.asynctask.searchStudentTask;
 import com.paris.listaalunos.database.ListStudentDataBase;
 import com.paris.listaalunos.database.dao.StudentDao;
@@ -47,8 +48,9 @@ public class ListStudentsView {
     }
 
     private void removeStudent(Student student) {
-        dao.remove(student);
-        adapter.remove(student);
+
+        new removeStudentTask(dao, adapter, student).execute();
+
     }
 
     public void configAdapter(ListView listStudents) {

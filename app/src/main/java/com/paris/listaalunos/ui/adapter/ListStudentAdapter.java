@@ -9,10 +9,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.paris.listaalunos.R;
+import com.paris.listaalunos.asynctask.searchFirstTelephoneStudentTask;
 import com.paris.listaalunos.database.ListStudentDataBase;
 import com.paris.listaalunos.database.dao.TelephoneDAO;
 import com.paris.listaalunos.model.Student;
-import com.paris.listaalunos.model.Telephone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +56,9 @@ public class ListStudentAdapter extends BaseAdapter {
     private void connects(View inflate, Student student) {
         TextView name = inflate.findViewById(R.id.item_student_name);
         name.setText(student.getName());
-        TextView phone = inflate.findViewById(R.id.item_student_phone);
-      //  Telephone firstTelephone = dao.searchFirstTelephone(student.getId());
-      //  if (firstTelephone != null){
-       //     phone.setText(firstTelephone.getNumber());
+        TextView fieldPhone = inflate.findViewById(R.id.item_student_phone);
+        new searchFirstTelephoneStudentTask(dao, fieldPhone, student.getId()).execute();
 
-      //  }
     }
 
     private View createView(ViewGroup viewGroup) {
