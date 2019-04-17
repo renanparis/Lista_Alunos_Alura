@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.paris.listaalunos.R;
+import com.paris.listaalunos.asynctask.SaveStudentTask;
+import com.paris.listaalunos.asynctask.SearchAllTelephonesTask;
+import com.paris.listaalunos.asynctask.UpdateStudentTask;
 import com.paris.listaalunos.database.ListStudentDataBase;
 import com.paris.listaalunos.database.dao.StudentDao;
 import com.paris.listaalunos.database.dao.TelephoneDAO;
@@ -84,17 +87,23 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
     }
 
     private void fillFieldStudent() {
-        studentPhones = telephoneDAO.searchAllPhones(student.getId());
-        for (Telephone telephone :
-                studentPhones) {
-            if (telephone.getType() == TelephoneType.TELEPHONE) {
-                fieldTelephone.setText(telephone.getNumber());
-            } else {
-                fieldCellPhone.setText(telephone.getNumber());
+
+        new SearchAllTelephonesTask(telephoneDAO, student, telephones -> {
+            this.studentPhones = telephones;
+            for (Telephone telephone :
+                    studentPhones) {
+                if (telephone.getType() == TelephoneType.TELEPHONE) {
+                    fieldTelephone.setText(telephone.getNumber());
+                } else {
+                    fieldCellPhone.setText(telephone.getNumber());
+                }
+
             }
 
-        }
+
+        }).execute();
     }
+
 
     private void fillForm() {
 
@@ -119,7 +128,7 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
             saveStudent(telephoneFixed, cellphone);
             Toast.makeText(this, "Aluno salvo com sucesso", Toast.LENGTH_SHORT).show();
         }
-        finish();
+
     }
 
     private Telephone createTelephone(EditText fieldTelephone, TelephoneType telephone) {
@@ -128,39 +137,17 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
     }
 
     private void saveStudent(Telephone telephoneFixed, Telephone cellphone) {
-        int studentId = studentDao.saveStudent(student).intValue();
-        connectsTelephoneStudent(studentId, telephoneFixed, cellphone);
-        telephoneDAO.saveTelephone(telephoneFixed, cellphone);
+
+        new SaveStudentTask(studentDao, student, telephoneDAO,
+                telephoneFixed, cellphone, this::finish).execute();
     }
 
     private void updateStudent(Telephone telephoneFixed, Telephone cellphone) {
-        studentDao.editStudent(student);
-        connectsTelephoneStudent(student.getId(), telephoneFixed, cellphone);
 
-        updatesIdStudent(telephoneFixed, cellphone);
-        telephoneDAO.update(telephoneFixed, cellphone);
+        new UpdateStudentTask(studentDao, student, telephoneFixed,
+                cellphone, telephoneDAO, studentPhones, this::finish).execute();
+
         Toast.makeText(this, "Aluno Alterado com sucesso!", Toast.LENGTH_SHORT).show();
-    }
-
-    private void updatesIdStudent(Telephone telephoneFixed, Telephone cellphone) {
-        for (Telephone telephone :
-                studentPhones) {
-            if (telephone.getType() == TelephoneType.TELEPHONE) {
-                telephoneFixed.setId(telephone.getId());
-            } else {
-                cellphone.setId(telephone.getId());
-            }
-
-        }
-    }
-
-    private void connectsTelephoneStudent(int studentId, Telephone... telephones) {
-        for (Telephone telephone :
-                telephones) {
-            telephone.setStudentId(studentId);
-
-        }
-
     }
 
 

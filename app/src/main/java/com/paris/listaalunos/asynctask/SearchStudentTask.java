@@ -8,13 +8,13 @@ import com.paris.listaalunos.ui.adapter.ListStudentAdapter;
 
 import java.util.List;
 
-public class searchStudentTask extends AsyncTask<Void, Void, List<Student>> {
+public class SearchStudentTask extends AsyncTask<Void, Void, List<Student>> {
 
 
     private final ListStudentAdapter adapter;
     private final StudentDao dao;
 
-    public searchStudentTask(ListStudentAdapter adapter, StudentDao dao) {
+    public SearchStudentTask(ListStudentAdapter adapter, StudentDao dao) {
         this.adapter = adapter;
         this.dao = dao;
     }

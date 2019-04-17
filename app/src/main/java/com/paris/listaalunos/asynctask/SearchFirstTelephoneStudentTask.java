@@ -1,27 +1,24 @@
 package com.paris.listaalunos.asynctask;
 
 import android.os.AsyncTask;
-import android.widget.TextView;
 
 import com.paris.listaalunos.database.dao.TelephoneDAO;
 import com.paris.listaalunos.model.Telephone;
 
-public class searchFirstTelephoneStudentTask extends AsyncTask<Void, Void, Telephone> {
+public class SearchFirstTelephoneStudentTask extends AsyncTask<Void, Void, Telephone> {
 
     private final TelephoneDAO dao;
-    private final TextView fieldPhone;
     private final int studentId;
+    private final firstNumberFoundListener listener;
 
-    public searchFirstTelephoneStudentTask(TelephoneDAO dao, TextView fieldPhone, int studentId) {
+    public SearchFirstTelephoneStudentTask(TelephoneDAO dao, int studentId, firstNumberFoundListener listener) {
         this.dao = dao;
-        this.fieldPhone = fieldPhone;
         this.studentId = studentId;
+        this.listener = listener;
     }
 
     @Override
     protected Telephone doInBackground(Void... voids) {
-
-
 
         return dao.searchFirstTelephone(studentId);
 
@@ -30,6 +27,10 @@ public class searchFirstTelephoneStudentTask extends AsyncTask<Void, Void, Telep
     @Override
     protected void onPostExecute(Telephone firstTelephone) {
         super.onPostExecute(firstTelephone);
-        fieldPhone.setText(firstTelephone.getNumber());
+        listener.whenFound(firstTelephone);
+    }
+
+    public interface firstNumberFoundListener {
+        void whenFound(Telephone telephoneFound);
     }
 }
