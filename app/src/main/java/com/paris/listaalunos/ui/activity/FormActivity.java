@@ -108,8 +108,6 @@ public class FormActivity extends AppCompatActivity implements ConstantActivity 
     private void fillForm() {
 
         String name = fieldName.getText().toString();
-        String telephone = fieldTelephone.getText().toString();
-        String cellPhone = fieldCellPhone.getText().toString();
         String email = fieldEmail.getText().toString();
 
         student.setName(name);

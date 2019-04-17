@@ -1,7 +1,5 @@
 package com.paris.listaalunos.asynctask;
 
-import android.os.AsyncTask;
-
 import com.paris.listaalunos.database.dao.StudentDao;
 import com.paris.listaalunos.database.dao.TelephoneDAO;
 import com.paris.listaalunos.model.Student;
@@ -10,7 +8,7 @@ import com.paris.listaalunos.model.TelephoneType;
 
 import java.util.List;
 
-public class UpdateStudentTask extends AsyncTask<Void, Void, Void> {
+public class UpdateStudentTask extends BaseStudentTask {
 
 
     private final StudentDao studentDao;
@@ -19,7 +17,6 @@ public class UpdateStudentTask extends AsyncTask<Void, Void, Void> {
     private final Telephone cellphone;
     private final TelephoneDAO telephoneDAO;
     private final List<Telephone> studentPhones;
-    private final whenUpdateListener listener;
 
     public UpdateStudentTask(StudentDao studentDao,
                              Student student,
@@ -27,14 +24,14 @@ public class UpdateStudentTask extends AsyncTask<Void, Void, Void> {
                              Telephone cellphone,
                              TelephoneDAO telephoneDAO,
                              List<Telephone> studentPhones,
-                             whenUpdateListener listener) {
+                             EndsListener listener) {
+        super(listener);
         this.studentDao = studentDao;
         this.student = student;
         this.telephoneFixed = telephoneFixed;
         this.cellphone = cellphone;
         this.telephoneDAO = telephoneDAO;
         this.studentPhones = studentPhones;
-        this.listener = listener;
     }
 
     @Override
@@ -49,14 +46,6 @@ public class UpdateStudentTask extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    private void connectsTelephoneStudent(int studentId, Telephone... telephones) {
-        for (Telephone telephone :
-                telephones) {
-            telephone.setStudentId(studentId);
-
-        }
-
-    }
 
     private void updatesIdStudent(Telephone telephoneFixed, Telephone cellphone) {
         for (Telephone telephone :
@@ -70,13 +59,4 @@ public class UpdateStudentTask extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        listener.whenUpdate();
-    }
-
-    public interface  whenUpdateListener{
-        void whenUpdate();
-    }
 }
